@@ -2,7 +2,7 @@
 const Role = require('./role.js');
 const User = require('./user.js');
 const Posting = require('./candidate.js')
-const Product = require('./product.js')
+// const Product = require('./product.js')
 const Profile = require('./profile.js')
 const Review = require('./review.js')
 const db = require('../config/Database.js');

@@ -13,7 +13,7 @@ exports.addProduct = async (req, res) => {
 
         console.log(name, description);
 
-        if (name == null || price == null ) {
+        if (name == null || description == null ) {
             return res.status(400).json({
                 message: "data postingan tidak lengkap"
             })
@@ -55,7 +55,7 @@ exports.addProduct = async (req, res) => {
 exports.readProducts = async (req, res) => {
     try {
       // Mengambil semua produk dari database
-      const Postings = await posting.findAll();
+      const Postings = await posting.findAndCountAll();
       
       // Memeriksa jika daftar produk kosong
       if (Postings.length === 0) {

@@ -20,14 +20,14 @@ const Product = {
         type: DataTypes.STRING
     },
     
-    countReview: {
-        type: DataTypes.INTEGER,
-        defaultValue:0
-    },
-    avgReview: {
-        type: DataTypes.INTEGER,
-        defaultValue:0
-    },
+    // countReview: {
+    //     type: DataTypes.INTEGER,
+    //     defaultValue:0
+    // },
+    // avgReview: {
+    //     type: DataTypes.INTEGER,
+    //     defaultValue:0
+    // },
     
 }
 

@@ -1,6 +1,6 @@
 const { review } = require('../models');
 
-exports.createReview = async (req, res) => {
+exports.createorUpdateReview = async (req, res) => {
     const idUser = req.user.id;
     const idProduct = req.params.productId;
 

@@ -16,7 +16,7 @@ const RoleRoute = require('./routes/role.js');
 const ProductRoute = require('./routes/productRoute.js');
 const ProfileRoute = require('./routes/profileRoute.js');
 const ReviewRoute = require('./routes/reviewRoute.js');
-
+const CandidateRoute = require('./routes/candidateRoute.js');
 
 
 const { secret } = require('./config/auth.js')
@@ -73,6 +73,7 @@ app.use('/api/v1/user', UserRoute);
 app.use('/api/v1/product', ProductRoute);
 app.use('/api/v1/profile', ProfileRoute);
 app.use('/api/v1/review', ReviewRoute);
+app.use('/api/v1/candidate', CandidateRoute);
 
 
 

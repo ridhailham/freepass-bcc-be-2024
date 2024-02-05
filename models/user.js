@@ -33,6 +33,12 @@ const User = {
             len: [6]
         }
     },
+    candidate: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        unique: true,
+        defaultValue: null
+    },
     role_id: {
         type: DataTypes.UUID,
         allowNull: false,

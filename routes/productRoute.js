@@ -6,7 +6,7 @@ const multer = require('multer');
 // const mulParse = multer();
 
 const path = require('path');
-const destroy = require('destroy');
+
 
 
 const storageProducts = multer.diskStorage({
@@ -61,13 +61,14 @@ const uploadProducts = multer({
     fileFilter: imageFilter
 });
 
-router.post('/', uploadProducts.single('image'), addProduct);
+router.post('/', addProduct);
 
 router.get('/', readProducts);
 
 router.get('/:id', detailProduct)
 
-router.put('/:id', uploadProducts.single('image'), updateProduct);
+// router.put('/:id', uploadProducts.single('image'), updateProduct);
+router.put('/:id', updateProduct);
 
 router.delete('/:id', destroyProduct)
 

@@ -9,10 +9,10 @@ const bcrypt = require('bcryptjs')
 const morgan = require('morgan');
 
 
-const UserRoute = require('./routes/user.js');
+const UserRoute = require('./routes/userRoute.js');
 const AuthRoute = require('./routes/AuthRoute.js');
 
-const RoleRoute = require('./routes/role.js');
+const RoleRoute = require('./routes/roleRoute.js');
 const PostingRoute = require('./routes/postingRoute.js');
 const ProfileRoute = require('./routes/profileRoute.js');
 const ReviewRoute = require('./routes/reviewRoute.js');

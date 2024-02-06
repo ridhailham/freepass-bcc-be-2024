@@ -1,5 +1,8 @@
 const { review } = require('../models');
 
+
+
+// fungsi memberikan komentar atau edit komentar lama
 exports.createorUpdateReview = async (req, res) => {
     const idUser = req.user.id;
     const idProduct = req.params.productId;

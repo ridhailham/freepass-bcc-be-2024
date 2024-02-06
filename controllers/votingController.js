@@ -3,7 +3,7 @@
 const { user, voting, profile } = require('../models');
 
 
-
+// fungsi menghitung suara hasil voting
 exports.countVoting = async (req, res) => {
     const { nomor_candidate } = req.body
 
@@ -33,6 +33,7 @@ exports.countVoting = async (req, res) => {
 }
 
 
+// fungsi tambah voting atau update voting
 exports.updateOrCreateProfile = async (req, res) => {
     const { nomor_candidate } = req.body
 

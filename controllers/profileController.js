@@ -1,6 +1,8 @@
 const { profile } = require('../models');
 
 
+
+// membuat dan edit tabel profile
 exports.updateOrCreateProfile = async (req, res) => {
     const { age, address } = req.body
 

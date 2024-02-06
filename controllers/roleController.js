@@ -1,10 +1,9 @@
 const { role } = require('../models');
 
 
+// fungsi membuat role
 exports.createRole = async (req, res) => {
     
-
-
     try {
       role.create({
         name: req.body.name,

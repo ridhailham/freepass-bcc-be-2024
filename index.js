@@ -40,28 +40,7 @@ app.use('/assets', express.static('assets'));
 // app.use('/assets/products', express.static('./assets/products'))
 
 
-// app.use(RolesRouter);
-// app.use(CategoriesRouter)
 
-// (async()=>{
-//     await db.sync();
-// })();
-
- 
-// function initial() {
-//     User.create({
-//         name: "admin brawijaya tournament",
-//         email: "",
-//         password: bcrypt.hashSync('', 8),
-//         lomba: "admin",
-//         tim: "admin",
-//         role: 'admin',
-//         wa: "082",
-//         form_peserta: "1",
-//         bukti_pembayaran: "1"
-
-//     })
-// }
 
 
 app.use(express.json());
@@ -83,7 +62,7 @@ app.use('/api/v1/candidate', CandidateRoute);
 // app.use(cors(
 //     {
 //     credentials: true,
-//     origin: 'https://brawijayatournament.com'
+//     origin: ''
 // }
 // ));
 

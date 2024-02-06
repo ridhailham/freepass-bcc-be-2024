@@ -13,7 +13,7 @@ const UserRoute = require('./routes/user.js');
 const AuthRoute = require('./routes/AuthRoute.js');
 
 const RoleRoute = require('./routes/role.js');
-const ProductRoute = require('./routes/productRoute.js');
+const PostingRoute = require('./routes/postingRoute.js');
 const ProfileRoute = require('./routes/profileRoute.js');
 const ReviewRoute = require('./routes/reviewRoute.js');
 const CandidateRoute = require('./routes/candidateRoute.js');
@@ -70,7 +70,7 @@ app.use(express.json());
 app.use('/api/v1/auth', AuthRoute);
 app.use('/api/v1/role', RoleRoute);
 app.use('/api/v1/user', UserRoute);
-app.use('/api/v1/product', ProductRoute);
+app.use('/api/v1/product', PostingRoute);
 app.use('/api/v1/profile', ProfileRoute);
 app.use('/api/v1/review', ReviewRoute);
 app.use('/api/v1/candidate', CandidateRoute);

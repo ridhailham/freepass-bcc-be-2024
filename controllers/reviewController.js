@@ -4,15 +4,15 @@ exports.createorUpdateReview = async (req, res) => {
     const idUser = req.user.id;
     const idProduct = req.params.productId;
 
-    const { point, content } = req.body;
+    const { content } = req.body;
 
     
 
-    if (point > 10) {
-        return res.status(400).json({
-            message: "Point tidak boleh lebih dari 10"
-        });
-    }
+    // if (point > 10) {
+    //     return res.status(400).json({
+    //         message: "Point tidak boleh lebih dari 10"
+    //     });
+    // }
 
     try {
         const myReview = await review.findOne({
@@ -24,7 +24,7 @@ exports.createorUpdateReview = async (req, res) => {
 
         if (myReview) {
             await myReview.update({
-                point: point || myReview.point,
+                // point: point || myReview.point,
                 content: content || myReview.content
             });
 
@@ -33,16 +33,16 @@ exports.createorUpdateReview = async (req, res) => {
             });
         } else {
 
-            if (point === null || content === null) {
+            if (content === null) {
                 return res.status(400).json({
-                    message: "Point atau content belum diisi dan anda juga belum melakukan review produk ini"
+                    message: "Content belum diisi dan anda juga belum melakukan review produk ini"
                 });
             }
 
             await review.create({
                 productId: idProduct,
                 userId: idUser,
-                point: point,
+                // point: point,
                 content: content
             });
 

@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { addProduct, readProducts, detailProduct, updateProduct, destroyProduct } = require('../controllers/productController.js');
+const { addPosting, readPostings, detailPosting, updatePosting, destroyPosting } = require('../controllers/postingController.js');
 
 const multer = require('multer');
 // const mulParse = multer();
 
 const path = require('path');
+const { verifyToken } = require('../middleware/verifyToken.js');
+const { adminOnly, candidateOnly } = require('../middleware/AuthUser.js');
 
 
 
@@ -61,15 +63,27 @@ const uploadProducts = multer({
     fileFilter: imageFilter
 });
 
-router.post('/', addProduct);
+// Candidate can create a post
+router.post('/', verifyToken, candidateOnly,  addPosting);
 
-router.get('/', readProducts);
+// User can view the candidate's posts
+router.get('/', verifyToken, readPostings);
 
-router.get('/:id', detailProduct)
+// Admin can view the candidate’s posts  
+router.get('/admin/', verifyToken, adminOnly, readPostings);
+
+router.get('/:id', detailPosting)
 
 // router.put('/:id', uploadProducts.single('image'), updateProduct);
-router.put('/:id', updateProduct);
 
-router.delete('/:id', destroyProduct)
+// Candidate can update a post
+router.put('/:id', verifyToken, candidateOnly, updatePosting);
+
+
+// Candidate can delete a post
+router.delete('/:id', verifyToken, candidateOnly, verifyToken, destroyPosting)
+
+// Admin can delete the candidate's posts
+router.delete('/admin/:id', verifyToken, adminOnly, destroyPosting)
 
 module.exports = router;    

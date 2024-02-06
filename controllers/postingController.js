@@ -5,7 +5,8 @@ const { profile } = require('console');
 
 
 
-exports.addProduct = async (req, res) => {
+exports.addPosting= async (req, res) => {
+
 
     try {
         
@@ -41,7 +42,7 @@ exports.addProduct = async (req, res) => {
 
 
         res.status(201).json({
-            message: "berhasil menambah product",
+            message: "berhasil menambah postingan",
             data: newProduct
         })
     } catch (error) {
@@ -52,7 +53,7 @@ exports.addProduct = async (req, res) => {
 
 
 
-exports.readProducts = async (req, res) => {
+exports.readPostings = async (req, res) => {
     try {
       // Mengambil semua produk dari database
       const Postings = await posting.findAndCountAll();
@@ -140,7 +141,7 @@ exports.readProducts = async (req, res) => {
 // }
 
 
-exports.detailProduct = async (req, res) => {
+exports.detailPosting = async (req, res) => {
 
 
     try {
@@ -206,7 +207,7 @@ exports.detailProduct = async (req, res) => {
 // }
 
 
-exports.updateProduct = async (req, res) => {
+exports.updatePosting = async (req, res) => {
 
 
     try {
@@ -225,7 +226,7 @@ exports.updateProduct = async (req, res) => {
 
         // Update product data
         postingData.name = name || postingData.name;
-        postingData.description = description || postingData.description;
+        postingData.description = description || postingData.description;z
 
 
 
@@ -247,7 +248,7 @@ exports.updateProduct = async (req, res) => {
 
 
 
-exports.destroyProduct = async (req, res) => {
+exports.destroyPosting = async (req, res) => {
 
     try {
         const postingId = req.params.id;

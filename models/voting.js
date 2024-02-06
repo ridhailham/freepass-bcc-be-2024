@@ -5,7 +5,7 @@ const User = require("./user.js");
 const {DataTypes} = Sequelize;
 
 
-const Profile = {
+const Voting = {
     id:{
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -13,28 +13,21 @@ const Profile = {
         primaryKey: true,
         
     },
-    age:{
+    candidate_selected:{
         type: DataTypes.INTEGER,
         allowNull: false
     },
-
-    address:{
-        type: DataTypes.TEXT,
-        allowNull: false,
-    },
-    // image:{
-    //     type: DataTypes.STRING,
-    // },
-    userId: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        reference: {
-            model: User,
-            key: 'id'
-        }
-    }
+    
+    // userId: {
+    //     type: DataTypes.UUID,
+    //     allowNull: false,
+    //     reference: {
+    //         model: User,
+    //         key: 'id'
+    //     }
+    // }
 }
 
 
 
-module.exports = Profile;
+module.exports = Voting;

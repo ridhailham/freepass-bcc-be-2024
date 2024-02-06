@@ -2,7 +2,7 @@
 const Role = require('./role.js');
 const User = require('./user.js');
 const Posting = require('./candidate.js')
-// const Product = require('./product.js')
+const Voting = require('./voting.js')
 const Profile = require('./profile.js')
 const Review = require('./review.js')
 const db = require('../config/Database.js');
@@ -16,21 +16,22 @@ const bcrypt = require('bcryptjs');
 //   }
 // );
 
+
 const role = db.define("Role", Role, {
-    tableName: "roles",
-    underscored: true,
-  }
+  tableName: "roles",
+  underscored: true,
+}
 );
 
 const user = db.define("User", User, {
-    tableName: "users",
-    underscored: true,
-  }
+  tableName: "users",
+  underscored: true,
+}
 );
 
 
 role.hasMany(user);
-user.belongsTo(role, {foreignKey: 'role_id'});
+user.belongsTo(role, { foreignKey: 'role_id' });
 
 
 // const product = db.define("Product", Product, {
@@ -61,7 +62,7 @@ const profile = db.define("Profile", Profile, {
 
 
 user.hasOne(profile);
-profile.belongsTo(user, {foreignKey: 'userId'});
+profile.belongsTo(user, { foreignKey: 'userId' });
 
 
 const review = db.define("Review", Review, {
@@ -83,31 +84,40 @@ user.belongsToMany(posting, { through: review });
 posting.belongsToMany(user, { through: review });
 
 user.hasMany(posting);
-posting.belongsTo(user, {foreignKey: 'userId'});
+posting.belongsTo(user, { foreignKey: 'userId' });
 
+
+const voting = db.define("Voting", Voting, {
+  tableName: "votings",
+  underscored: true,
+}
+);
+
+user.hasOne(voting);
+voting.belongsTo(user, {foreignKey: 'userId'});
 
 
 
 async function initial() {
-    const userRole = await role.findOne({ where: { name: "admin" } });
-    user.create({
-        name: "admin",
-        email: "admin@gmail.com",
-        password: bcrypt.hashSync('123456', 8),
-        role_id: userRole.id,
+  const userRole = await role.findOne({ where: { name: "admin" } });
+  user.create({
+    name: "admin",
+    email: "admin@gmail.com",
+    password: bcrypt.hashSync('123456', 8),
+    role_id: userRole.id,
 
-    })
-}  
+  })
+}
 
 
-db.sync()
-.then(() => {
+db.sync({force: true})
+  .then(() => {
     // initial();
-    
+
     console.log("database connected");
 
-}).catch(() => {
+  }).catch(() => {
     console.log("database failed");
-})
+  })
 
-module.exports = { db,  user, role, posting, profile, review };
+module.exports = { db, user, role, posting, profile, review, voting };

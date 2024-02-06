@@ -4,12 +4,14 @@ const { role } = require('../models');
 const jwt = require('jsonwebtoken');
 
 
+// fungsi proses token jwt
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.SECRET_KEY, {
     expiresIn: process.env.JWT_EXPIRES_IN
   })
 }
 
+// fungsi pembuatan cookie 
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user.id);
 
@@ -34,6 +36,8 @@ const createSendToken = (user, statusCode, res) => {
 }
 
 
+
+// fungsi registrasi pengguna
 exports.registerUser = async (req, res) => {
 
   const roleName = "user"
@@ -105,6 +109,9 @@ exports.registerUser = async (req, res) => {
 };
 
 
+
+
+// fungsi login pengguna
 exports.loginUser = async (req, res, next) => {
 
 
@@ -184,6 +191,8 @@ exports.loginUser = async (req, res, next) => {
 }
 
 
+
+// fungsi logout pengguna
 exports.logoutUser = async (req, res) => {
   res.cookie('jwt', '', {
       httpOnly: true,
@@ -214,6 +223,8 @@ exports.logoutUser = async (req, res) => {
 // }
 
 
+
+// fungsi menampilkan data tabel user yang sudah login 
 exports.getMyUser = async (req, res) => {
   const currentUser = await user.findOne({
     where: {

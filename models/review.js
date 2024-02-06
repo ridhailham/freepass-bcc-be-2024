@@ -30,14 +30,14 @@ const Review = {
     //     }
     // },
     
-    point: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-            max: 10, 
-            min: 0,  
-        }
-    },
+    // point: {
+    //     type: DataTypes.INTEGER,
+    //     allowNull: false,
+    //     validate: {
+    //         max: 10, 
+    //         min: 0,  
+    //     }
+    // },
     content:{
         type: DataTypes.TEXT,
         allowNull: false

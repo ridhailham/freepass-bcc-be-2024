@@ -1,8 +1,8 @@
 const { profile } = require('../models');
-const { bio } = require('../models/profile');
+
 
 exports.updateOrCreateProfile = async (req, res) => {
-    const { age, bio, address } = req.body
+    const { age, address } = req.body
 
     const idUser = req.user.id;
 
@@ -19,7 +19,6 @@ exports.updateOrCreateProfile = async (req, res) => {
     if(userData) {
         await profile.update({
             age: age || userData.age,
-            bio: bio || userData.bio,
             address: address || userData.address
         }, {
             where: {
@@ -30,7 +29,6 @@ exports.updateOrCreateProfile = async (req, res) => {
     } else {
         await profile.create({
             age: age,
-            bio: bio,
             address: address,
             userId: idUser
         })

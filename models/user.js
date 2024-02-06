@@ -39,6 +39,11 @@ const User = {
         unique: true,
         defaultValue: null
     },
+    paslon:{
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: true
+    },
     role_id: {
         type: DataTypes.UUID,
         allowNull: false,

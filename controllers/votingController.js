@@ -1,6 +1,6 @@
 
 
-const { user, voting, profile } = require('../models');
+const { user, voting, role } = require('../models');
 
 
 // fungsi menghitung suara hasil voting
@@ -13,7 +13,7 @@ exports.countVoting = async (req, res) => {
         }
     })
 
-    if(!isCandidateExist) {
+    if (!isCandidateExist) {
         return res.status(400).json({
             message: "candidate yang anda pilih tidak ada"
         })
@@ -34,17 +34,33 @@ exports.countVoting = async (req, res) => {
 
 
 // fungsi tambah voting atau update voting
-exports.updateOrCreateProfile = async (req, res) => {
+exports.updateOrCreateVoting = async (req, res) => {
+    console.log("HOOOOOOOOOOOOOOOOOOOOOOO");
+    const Role = await role.findByPk(req.user.role_id);
+
+    if (!Role) {
+        return res.status(400).json({
+            message: 'Role tidak ada yang cocok',
+        });
+    }
+
+    if (Role.name == "admin") {
+        return res.status(403).json({
+            message: 'Akses terlarang, admin tidak bisa ikut voting',
+        });
+    }
+
+
     const { nomor_candidate } = req.body
 
     const isCandidateExist = await user.findOne({
         where: {
             candidate: nomor_candidate,
-            role: "candidate"
+            role_id: req.user.role_id
         }
     })
 
-    if(!isCandidateExist){
+    if (!isCandidateExist) {
         return res.status(400).json({
             message: "candidate yang anda pilih tidak ada"
         })
@@ -52,21 +68,21 @@ exports.updateOrCreateProfile = async (req, res) => {
 
     const idUser = req.user.id;
 
-    
+
     const votingData = await voting.findOne({
         where: {
             userId: idUser
         }
     })
 
-    
-    let message = "";
-    
 
-    if(votingData) {
+    let message = "";
+
+
+    if (votingData) {
         await voting.update({
             candidate_selected: nomor_candidate || isCandidateExist.candidate,
-            
+
         }, {
             where: {
                 userId: idUser

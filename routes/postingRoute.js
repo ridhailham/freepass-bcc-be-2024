@@ -7,7 +7,7 @@ const multer = require('multer');
 
 const path = require('path');
 const { verifyToken } = require('../middleware/verifyToken.js');
-const { adminOnly, candidateOnly } = require('../middleware/AuthUser.js');
+const { adminOnly, candidateOnly, userOnly } = require('../middleware/AuthUser.js');
 
 
 
@@ -67,7 +67,7 @@ const uploadProducts = multer({
 router.post('/', verifyToken, candidateOnly,  addPosting);
 
 // User can view the candidate's posts
-router.get('/', verifyToken, readPostings);
+router.get('/', verifyToken, userOnly, readPostings);
 
 // Admin can view the candidate’s posts  
 router.get('/admin/', verifyToken, adminOnly, readPostings);

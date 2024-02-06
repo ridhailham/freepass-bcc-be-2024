@@ -1,7 +1,7 @@
 
 const Role = require('./role.js');
 const User = require('./user.js');
-const Posting = require('./candidate.js')
+const Posting = require('./posting.js')
 const Voting = require('./voting.js')
 const Profile = require('./profile.js')
 const Review = require('./review.js')
@@ -110,7 +110,7 @@ async function initial() {
 }
 
 
-db.sync({force: true})
+db.sync()
   .then(() => {
     // initial();
 

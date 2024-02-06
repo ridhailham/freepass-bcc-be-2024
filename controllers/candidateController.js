@@ -10,11 +10,11 @@ exports.createCandidate = async (req, res) => {
 
     const roleName = "candidate"
 
-    const { candidate } = req.body
+    const { candidate, paslon } = req.body
 
 
 
-    if (req.body.name == null || req.body.email == null || req.body.candidate == null) {
+    if (req.body.name == null || req.body.email == null || req.body.candidate == null || paslon == null) {
         return res.status(400).json({
             message: "mohon diisi dengan lengkap",
         });
@@ -47,7 +47,8 @@ exports.createCandidate = async (req, res) => {
         await user.update({
 
             role_id: userRole.id,
-            candidate: candidate
+            candidate: candidate,
+            paslon: paslon
 
         },
             {

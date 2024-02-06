@@ -5,7 +5,7 @@ const db = require("../config/Database.js")
 const {DataTypes} = Sequelize;
 
 
-const Product = {
+const Posting = {
     id:{
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -31,4 +31,4 @@ const Product = {
     
 }
 
-module.exports = Product;
+module.exports = Posting;

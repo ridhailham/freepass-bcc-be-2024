@@ -1,11 +1,23 @@
-const { review } = require('../models');
+const { review, posting } = require('../models');
 
 
 
 // fungsi memberikan komentar atau edit komentar lama
 exports.createorUpdateReview = async (req, res) => {
     const idUser = req.user.id;
-    const idProduct = req.params.productId;
+    const idPosting = req.params.postingId;
+
+    const isPostingExist = await posting.findOne({
+        where: {
+            id: idPosting
+        }
+    })
+
+    if(!isPostingExist) {
+        return res.status(400).json({
+            message: "postingan yang ingin anda komentari tidak ditemukan"
+        })
+    }
 
     const { content } = req.body;
 
@@ -20,14 +32,14 @@ exports.createorUpdateReview = async (req, res) => {
     try {
         const myReview = await review.findOne({
             where: {
-                productId: idProduct,
-                userId: idUser
+                posting_id: idPosting,
+                user_id: idUser
             }
         });
 
         if (myReview) {
             await myReview.update({
-                // point: point || myReview.point,
+                
                 content: content || myReview.content
             });
 
@@ -43,9 +55,9 @@ exports.createorUpdateReview = async (req, res) => {
             }
 
             await review.create({
-                productId: idProduct,
+                postingId: idPosting,
                 userId: idUser,
-                // point: point,
+                
                 content: content
             });
 

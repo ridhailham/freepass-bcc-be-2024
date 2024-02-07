@@ -99,14 +99,45 @@ voting.belongsTo(user, {foreignKey: 'userId'});
 
 
 async function initial() {
-  const userRole = await role.findOne({ where: { name: "admin" } });
-  user.create({
+  await role.create({
+    name: "candidate"
+  })
+
+  await role.create({
+    name: "admin"
+  })
+
+  await role.create({
+    name: "user"
+  })
+
+  const userRole1 = await role.findOne({ where: { name: "admin" } });
+  await user.create({
     name: "admin",
     email: "admin@gmail.com",
     password: bcrypt.hashSync('123456', 8),
-    role_id: userRole.id,
+    role_id: userRole1.id,
 
   })
+
+  const userRole2 = await role.findOne({ where: { name: "user" } });
+  await user.create({
+    name: "ridha ilham",
+    email: "ridha@gmail.com",
+    password: bcrypt.hashSync('123456', 8),
+    role_id: userRole2.id,
+
+  })
+
+  
+  await user.create({
+    name: "adi setyawan",
+    email: "adi@gmail.com",
+    password: bcrypt.hashSync('123456', 8),
+    role_id: userRole2.id,
+
+  })
+
 }
 
 

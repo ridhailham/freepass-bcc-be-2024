@@ -49,7 +49,7 @@ app.use('/api/v1/voting', VotingRoute);
 app.use('/api/v1/auth', AuthRoute);
 app.use('/api/v1/role', RoleRoute);
 app.use('/api/v1/user', UserRoute);
-app.use('/api/v1/product', PostingRoute);
+app.use('/api/v1/post', PostingRoute);
 app.use('/api/v1/profile', ProfileRoute);
 app.use('/api/v1/review', ReviewRoute);
 app.use('/api/v1/candidate', CandidateRoute);

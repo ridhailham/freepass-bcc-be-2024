@@ -5,6 +5,6 @@ const { createorUpdateReview } = require('../controllers/reviewController.js');
 const { userOnly } = require('../middleware/AuthUser.js');
 
 // User can comment on candidate’s posts
-router.post('/:productId', verifyToken, userOnly, createorUpdateReview);
+router.post('/:postingId', verifyToken, userOnly, createorUpdateReview);
 
 module.exports = router;

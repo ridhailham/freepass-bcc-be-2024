@@ -9,6 +9,6 @@ const { verifyToken } = require('../middleware/verifyToken.js');
 router.get('/', verifyToken, userOnly, getAllCandidate)
 
 // Admin can promote user to candidate
-router.put('/', verifyToken, adminOnly, createCandidate);
+router.put('/admin/', verifyToken, adminOnly, createCandidate);
 
 module.exports = router;

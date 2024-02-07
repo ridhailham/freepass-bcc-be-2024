@@ -9,6 +9,6 @@ const { verifyToken } = require('../middleware/verifyToken.js');
 router.get('/', verifyToken, adminOnly, getAllUser);
 
 // Admin can delete the user/candidate
-router.get('/:id', verifyToken, adminOnly, destroyUser);
+router.get('/admin/:id', verifyToken, adminOnly, destroyUser);
 
 module.exports = router;

@@ -10,11 +10,11 @@ exports.createCandidate = async (req, res) => {
 
     const roleName = "candidate"
 
-    const { candidate, paslon } = req.body
+    const { name_paslon, email_paslon ,candidate, paslon } = req.body
 
 
 
-    if (req.body.name == null || req.body.email == null || req.body.candidate == null || paslon == null) {
+    if (name_paslon == null || email_paslon == null || candidate == null || paslon == null) {
         return res.status(400).json({
             message: "mohon diisi dengan lengkap",
         });
@@ -22,7 +22,7 @@ exports.createCandidate = async (req, res) => {
 
     const isUserExist = await user.findOne({
         where: {
-            email: req.body.email,
+            email: email_paslon,
         },
     });
 
@@ -53,7 +53,7 @@ exports.createCandidate = async (req, res) => {
         },
             {
                 where: {
-                    email: req.body.email
+                    email: email_paslon
                 }
             }
         );

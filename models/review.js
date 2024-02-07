@@ -3,6 +3,7 @@ const { Sequelize } = require("sequelize")
 const db = require("../config/Database.js")
 
 const User = require("./user.js");
+const Posting = require("./posting.js");
 // const Product = require("./product.js");
 const {DataTypes} = Sequelize;
 
@@ -18,6 +19,14 @@ const Review = {
         allowNull: false,
         references: {
             model: User,
+            key: 'id'
+        }
+    },
+    postingId:{
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+            model: Posting,
             key: 'id'
         }
     },
@@ -38,7 +47,7 @@ const Review = {
     //         min: 0,  
     //     }
     // },
-    content:{
+    comment:{
         type: DataTypes.TEXT,
         allowNull: false
     }

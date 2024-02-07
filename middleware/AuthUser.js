@@ -126,7 +126,7 @@ exports.userOnly = async (req, res, next) => {
 
         if (Role.name !== "user") {
             return res.status(403).json({
-                message: 'Akses terlarang, Anda bukan candidate',
+                message: 'Akses terlarang, Anda bukan user',
             });
         }
 

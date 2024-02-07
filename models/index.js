@@ -5,6 +5,8 @@ const Posting = require('./posting.js')
 const Voting = require('./voting.js')
 const Profile = require('./profile.js')
 const Review = require('./review.js')
+const Time = require('./time.js')
+
 const db = require('../config/Database.js');
 const bcrypt = require('bcryptjs');
 
@@ -98,6 +100,16 @@ voting.belongsTo(user, {foreignKey: 'userId'});
 
 
 
+const time = db.define("Time", Time, {
+  tableName: "times",
+  underscored: true,
+}
+);
+
+user.hasOne(time);
+time.belongsTo(user, { foreignKey: 'userId' });
+
+
 async function initial() {
   await role.create({
     name: "candidate"
@@ -141,7 +153,7 @@ async function initial() {
 }
 
 
-db.sync()
+db.sync({force: true})
   .then(() => {
     // initial();
 

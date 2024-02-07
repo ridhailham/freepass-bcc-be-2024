@@ -35,7 +35,7 @@ exports.countVoting = async (req, res) => {
 
 // fungsi tambah voting atau update voting
 exports.updateOrCreateVoting = async (req, res) => {
-    console.log("HOOOOOOOOOOOOOOOOOOOOOOO");
+    
     const Role = await role.findByPk(req.user.role_id);
 
     if (!Role) {

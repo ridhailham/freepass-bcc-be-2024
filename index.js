@@ -18,6 +18,7 @@ const ProfileRoute = require('./routes/profileRoute.js');
 const ReviewRoute = require('./routes/reviewRoute.js');
 const CandidateRoute = require('./routes/candidateRoute.js');
 const VotingRoute = require('./routes/votingRoute.js');
+const timeRoute = require('./routes/timeRoute.js');
 
 const { secret } = require('./config/auth.js')
 
@@ -45,7 +46,7 @@ app.use('/assets', express.static('assets'));
 
 app.use(express.json());
 
-app.use('/api/v1/voting', VotingRoute);
+app.use('/api/v1/vote', VotingRoute);
 app.use('/api/v1/auth', AuthRoute);
 app.use('/api/v1/role', RoleRoute);
 app.use('/api/v1/user', UserRoute);
@@ -53,7 +54,7 @@ app.use('/api/v1/post', PostingRoute);
 app.use('/api/v1/profile', ProfileRoute);
 app.use('/api/v1/review', ReviewRoute);
 app.use('/api/v1/candidate', CandidateRoute);
-
+app.use('/api/v1/time', timeRoute);
 
 
 

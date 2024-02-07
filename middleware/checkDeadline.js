@@ -1,33 +1,30 @@
-const { user, time, role } = require('../models');
+const { time } = require('../models');
 
-exports.checkDeadline = async (req, res) => {
+exports.checkDeadline = async (req, res, next) => {
     try {
-        const startTime = new Date('2024-02-07T08:00:00'); // Ganti dengan waktu mulai yang Anda inginkan
-        const endTime = new Date('2024-02-07T17:00:00'); // Ganti dengan waktu akhir yang Anda inginkan
+        const currentTime = new Date(); // Mendapatkan waktu saat ini
 
-        const { name_time } = req.body;
+        // Mendapatkan data waktu dari database
+        const deadline = await time.findOne();
 
-        const deadline = await time.findAll();
 
         if (!deadline) {
             return res.status(400).json({
-                message: "nama deadline tidak ada"
+                message: "Data deadline tidak ditemukan."
             });
         }
 
-        const currentTime = new Date(); // Menambahkan waktu saat ini
+        const startTime = new Date(deadline.start_time);
+        const endTime = new Date(deadline.end_time);
 
-        if (currentTime < deadline.start_time || currentTime > deadline.end_time) {
+        // Memeriksa apakah waktu saat ini berada di antara waktu mulai dan waktu selesai
+        if (currentTime < startTime || currentTime > endTime) {
             return res.status(403).json({ 
-                message: 'Operasi tidak diizinkan di luar jam kerja.' 
+                message: 'Tidak bisa voting karena di luar waktu pemilu' 
             });
         }
 
-        // Memperbaiki pesan respon agar sesuai dengan konteks
-        // return res.status(200).json({
-        //     message: `Operasi diizinkan pada waktu ini.`
-        // });
-
+        // Jika waktu saat ini berada di dalam jangka waktu yang diizinkan, lanjutkan dengan middleware berikutnya
         next();
 
     } catch (error) {
@@ -36,7 +33,4 @@ exports.checkDeadline = async (req, res) => {
             message: "Terjadi kesalahan dalam mengecek deadline."
         });
     }
-
-    
-    
 };

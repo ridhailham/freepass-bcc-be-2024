@@ -153,7 +153,7 @@ async function initial() {
 }
 
 
-db.sync({force: true})
+db.sync()
   .then(() => {
     // initial();
 
@@ -163,4 +163,4 @@ db.sync({force: true})
     console.log("database failed");
   })
 
-module.exports = { db, user, role, posting, profile, review, voting };
+module.exports = { db, user, role, posting, profile, review, voting, time };

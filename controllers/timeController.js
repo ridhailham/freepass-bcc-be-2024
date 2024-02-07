@@ -37,7 +37,7 @@ exports.getTimeByName = async (req, res) => {
 exports.updateOrCreateTime = async (req, res) => {
     
 
-    const { name_time, start_time, end_time } = req.body
+    const { start_time, end_time } = req.body
 
     // const isCandidateExist = await time.findOne({
     //     where: {
@@ -59,7 +59,7 @@ exports.updateOrCreateTime = async (req, res) => {
 
     const timeData = await time.findOne({
         where: {
-            name_time: name_time
+            userId: idUser
         }
     })
 
@@ -73,14 +73,14 @@ exports.updateOrCreateTime = async (req, res) => {
             end_time: end_time,
         }, {
             where: {
-                name_time: name_time
+                userId: idUser
             }
         })
         message = "Time berhasil update"
 
     } else {
         await time.create({
-            name_time: name_time,
+            
             start_time: start_time,
             end_time: end_time,
             userId: idUser

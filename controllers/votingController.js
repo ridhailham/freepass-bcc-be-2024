@@ -56,7 +56,7 @@ exports.updateOrCreateVoting = async (req, res) => {
     const isCandidateExist = await user.findOne({
         where: {
             candidate: nomor_candidate,
-            role_id: req.user.role_id
+            
         }
     })
 

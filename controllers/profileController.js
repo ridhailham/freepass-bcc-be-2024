@@ -38,7 +38,5 @@ exports.updateOrCreateProfile = async (req, res) => {
         message = "profile berhasil dibuat"
     }
 
-    return res.status(201).json({
-        message: message
-    })
+    
 }

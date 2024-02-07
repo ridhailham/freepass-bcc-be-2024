@@ -10,11 +10,11 @@ const Time = {
         primaryKey: true,
     },
     start_time: {
-        type: DataTypes.DATE, // Mengubah tipe data menjadi DATE
+        type: DataTypes.DATE, 
         allowNull: false,
     },
     end_time: {
-        type: DataTypes.DATE, // Mengubah tipe data menjadi DATE
+        type: DataTypes.DATE, 
         allowNull: false,
     }
 };

@@ -128,12 +128,14 @@ async function initial() {
     name: "admin",
     email: "admin@gmail.com",
     password: bcrypt.hashSync('123456', 8),
+    age: 21,
+    address: "Solo",
     role_id: userRole1.id,
 
   })
 
   const userRole2 = await role.findOne({ where: { name: "user" } });
-  await user.create({
+  const user1 = await user.create({
     name: "ridha ilham",
     email: "ridha@gmail.com",
     password: bcrypt.hashSync('123456', 8),
@@ -141,13 +143,25 @@ async function initial() {
 
   })
 
+  await profile.create({
+    age: 21,
+    address: "Solo",
+    userId: user1.id
+  })
+
   
-  await user.create({
+  const user2 = await user.create({
     name: "adi setyawan",
     email: "adi@gmail.com",
     password: bcrypt.hashSync('123456', 8),
     role_id: userRole2.id,
 
+  })
+
+  await profile.create({
+    age: 21,
+    address: "Solo",
+    userId: user2.id
   })
 
 }

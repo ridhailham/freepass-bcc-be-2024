@@ -4,10 +4,11 @@ const router = express.Router();
 const { registerUser, loginUser, getMyUser } = require('../controllers/AuthController.js');
 const { logoutUser } = require('../controllers/AuthController.js');
 const { verifyToken } = require('../middleware/verifyToken.js');
+const { updateOrCreateProfile } = require('../controllers/profileController.js');
 
 
 // New user can register account to the system
-router.post('/register', registerUser);
+router.post('/register', registerUser, verifyToken, updateOrCreateProfile);
 
 // User can login to the system
 router.post('/login', loginUser);

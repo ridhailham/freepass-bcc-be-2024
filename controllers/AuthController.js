@@ -28,7 +28,7 @@ const createSendToken = (user, statusCode, res) => {
 
   res.status(statusCode).json({
     status: "Success",
-    
+    message: "berhasil membuat user",
     data: {
       user: user
     }
@@ -38,12 +38,11 @@ const createSendToken = (user, statusCode, res) => {
 
 
 // fungsi registrasi pengguna
-exports.registerUser = async (req, res) => {
-
-  const roleName = "user"
+exports.registerUser = async (req, res, next) => {
 
 
-  if (req.body.name == null || req.body.email == null || req.body.password == null || req.body.passwordConfirm == null || role == null) {
+
+  if (req.body.name == null || req.body.email == null || req.body.password == null || req.body.passwordConfirm == null || req.body.age == null || req.body.address == null) {
     return res.status(400).json({
       message: "mohon diisi dengan lengkap",
     });
@@ -83,13 +82,14 @@ exports.registerUser = async (req, res) => {
   });
 
 
+  
   try {
+    
     const newUser = await user.create({
       name: req.body.name,
       email: req.body.email,
       password: hashPassword,
       role_id: userRole.id
-
     });
 
     createSendToken(newUser, 201, res);
@@ -100,13 +100,17 @@ exports.registerUser = async (req, res) => {
     //       expiresIn: '1h',
     //   }
     // );
+    next()
+    
   } catch (error) {
     return res.status(400).json({
       message: error.message,
+      errors: error.errors 
 
     });
   }
 };
+
 
 
 

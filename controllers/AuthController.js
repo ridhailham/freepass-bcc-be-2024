@@ -26,13 +26,13 @@ const createSendToken = (user, statusCode, res) => {
 
   user.password = undefined;
 
-  res.status(statusCode).json({
-    status: "Success",
-    message: "berhasil membuat user",
-    data: {
-      user: user
-    }
-  })
+  // res.status(statusCode).json({
+  //   status: "Success",
+  //   message: "berhasil membuat user",
+  //   data: {
+  //     user: user
+  //   }
+  // })
 }
 
 

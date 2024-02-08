@@ -7,6 +7,7 @@ exports.updateOrCreateProfile = async (req, res) => {
     const { age, address } = req.body
 
     const idUser = req.user.id;
+    const image = req.file.path
 
     const userData = await profile.findOne({
         where: {
@@ -14,28 +15,35 @@ exports.updateOrCreateProfile = async (req, res) => {
         }
     })
 
-    console.log("INI USER BANGGG " + userData);
+    
     let message = "";
     
 
     if(userData) {
         await profile.update({
             age: age || userData.age,
-            address: address || userData.address
+            address: address || userData.address,
+            image: image || userData.image
         }, {
             where: {
                 userId: idUser
             }
         })
-        message = "Profile berhasil update"
+
+        return res.status(200).json({
+            message : "Profile berhasil update"
+        })
+        
     } else {
         await profile.create({
             age: age,
             address: address,
             userId: idUser
         })
-
-        message = "profile berhasil dibuat"
+        return res.status(200).json({
+            message : "Profile berhasil dibuat"
+        })
+        
     }
 
     

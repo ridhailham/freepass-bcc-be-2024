@@ -13,7 +13,7 @@ const { adminOnly, candidateOnly, userOnly } = require('../middleware/AuthUser.j
 
 const storageProducts = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "./assets/products");
+        cb(null, "./assets/images");
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname);
@@ -64,10 +64,10 @@ const uploadProducts = multer({
 });
 
 // Candidate can create a post
-router.post('/', verifyToken, candidateOnly,  addPosting);
+router.post('/', verifyToken, candidateOnly, uploadProducts.single('image'), addPosting);
 
 // User can view the candidate's posts
-router.get('/', verifyToken, userOnly, readPostings);
+router.get('/', verifyToken, readPostings);
 
 // Admin can view the candidate’s posts  
 router.get('/admin/', verifyToken, adminOnly, readPostings);
@@ -77,7 +77,7 @@ router.get('/:id', detailPosting)
 // router.put('/:id', uploadProducts.single('image'), updateProduct);
 
 // Candidate can update a post
-router.put('/:id', verifyToken, candidateOnly, updatePosting);
+router.put('/:id', verifyToken, candidateOnly, uploadProducts.single('image'), updatePosting);
 
 
 // Candidate can delete a post

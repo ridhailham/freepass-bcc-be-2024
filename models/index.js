@@ -130,6 +130,7 @@ async function initial() {
     password: bcrypt.hashSync('123456', 8),
     age: 21,
     address: "Solo",
+    
     role_id: userRole1.id,
 
   })
@@ -146,6 +147,7 @@ async function initial() {
   await profile.create({
     age: 21,
     address: "Solo",
+    image: '/assets/images/alam1.jpg',
     userId: user1.id
   })
 
@@ -161,6 +163,7 @@ async function initial() {
   await profile.create({
     age: 21,
     address: "Solo",
+    image: '/assets/images/alam2.jpg',
     userId: user2.id
   })
 

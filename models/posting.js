@@ -19,7 +19,10 @@ const Posting = {
     description:{
         type: DataTypes.STRING
     },
-    
+    image: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     
 }
 

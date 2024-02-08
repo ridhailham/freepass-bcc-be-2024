@@ -5,46 +5,33 @@ const { profile } = require('console');
 
 
 
-exports.addPosting= async (req, res) => {
 
+
+exports.addPosting= async (req, res) => {
 
     try {
         
+        let image = req.file.path
         let { name, description } = req.body
 
-        console.log(name, description);
-
-        if (name == null || description == null ) {
+        if (name == null || description == null || image == null) {
             return res.status(400).json({
                 message: "data postingan tidak lengkap"
             })
         }
 
-        
-
-        // const newProduct = await product.create({
-        //     name: name,
-        //     description: description,
-        //     price: price,
-        //     categoryId: findCategory.id,
-        //     stock: stock,
-        //     image: req.file.path
-        // })
-
-        const newProduct = await posting.create({
+        const newPosting = await posting.create({
             name: name,
             description: description,
-            // price: price,
-            // categoryId: findCategory.id,
-            // stock: stock,
-            // image: req.file ? req.file.path : null
+            image: image
         });
 
 
         res.status(201).json({
             message: "berhasil menambah postingan",
-            data: newProduct
+            data: newPosting
         })
+
     } catch (error) {
         res.status(500).json(error.message)
     }
@@ -229,6 +216,9 @@ exports.updatePosting = async (req, res) => {
         postingData.description = description || postingData.description;z
 
 
+        if (req.file) {
+            productData.image = req.file.path;
+        }
 
 
         // Save the updated product

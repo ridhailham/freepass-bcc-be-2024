@@ -22,17 +22,18 @@ const Profile = {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    // image:{
-    //     type: DataTypes.STRING,
-    // },
-    userId: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        reference: {
-            model: User,
-            key: 'id'
-        }
-    }
+    image:{
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    // userId: {
+    //     type: DataTypes.UUID,
+    //     allowNull: false,
+    //     reference: {
+    //         model: User,
+    //         key: 'id'
+    //     }
+    // }
     
 }
 

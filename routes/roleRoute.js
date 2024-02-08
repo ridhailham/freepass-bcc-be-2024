@@ -4,8 +4,8 @@ const router = express.Router();
 const { createRole } = require('../controllers/roleController.js');
 
 
-
-router.post('/', createRole);
+// create role tidak dibutuhkan karena langsung inisiasi melalui fungsi di model
+// router.post('/', createRole);
 
 
 

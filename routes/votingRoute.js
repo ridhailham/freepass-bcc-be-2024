@@ -13,6 +13,8 @@ router.get('/', verifyToken, countVoting)
 
 
 // Users can cast their votes for candidates during the specified election period
-router.post('/', checkDeadline, verifyToken, updateOrCreateVoting)
+router.post('/', verifyToken, checkDeadline, updateOrCreateVoting)
 
 module.exports = router
+
+

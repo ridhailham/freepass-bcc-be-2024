@@ -20,14 +20,6 @@ const Posting = {
         type: DataTypes.STRING
     },
     
-    // countReview: {
-    //     type: DataTypes.INTEGER,
-    //     defaultValue:0
-    // },
-    // avgReview: {
-    //     type: DataTypes.INTEGER,
-    //     defaultValue:0
-    // },
     
 }
 

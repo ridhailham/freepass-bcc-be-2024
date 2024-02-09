@@ -16,6 +16,7 @@ const Review = {
     },
     userId:{
         type: DataTypes.UUID,
+        unique: false,
         allowNull: false,
         references: {
             model: User,
@@ -24,20 +25,14 @@ const Review = {
     },
     postingId:{
         type: DataTypes.UUID,
+        unique: false,
         allowNull: false,
         references: {
             model: Posting,
             key: 'id'
         }
     },
-    // userId: {
-    //     type: DataTypes.UUID,
-    //     allowNull: false,
-    //     reference: {
-    //         model: User,
-    //         key: 'id'
-    //     }
-    // },
+  
 
     comment:{
         type: DataTypes.TEXT,

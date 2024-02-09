@@ -3,10 +3,11 @@ const router = express.Router();
 const multer = require('multer')
 const path = require('path')
 
-const { registerUser, loginUser, getMyUser } = require('../../controllers/auth/AuthController.js');
+const { registerUser, loginUser } = require('../../controllers/auth/AuthController.js');
 const { logoutUser } = require('../../controllers/auth/AuthController.js');
 const { verifyToken } = require('../../middleware/verifyToken.js');
-const { updateOrCreateProfile } = require('../../controllers/user/profileController.js');
+const { getMyUser } = require('../../controllers/user/userController.js');
+
 
 
 const storageProducts = multer.diskStorage({

@@ -38,7 +38,7 @@ exports.createorUpdateReview = async (req, res) => {
             });
 
             return res.status(200).json({
-                message: "Review berhasil diupdate"
+                message: "Comment berhasil diupdate"
             });
         } else {
 

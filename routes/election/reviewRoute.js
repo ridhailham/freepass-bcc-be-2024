@@ -7,7 +7,7 @@ const { userOnly, adminOnly } = require('../../middleware/AuthUser.js');
 
 // Soal No 13
 // Admin delete a user comment
-router.delete('/:id', verifyToken, adminOnly, deleteReview);
+router.delete('/admin/:id', verifyToken, adminOnly, deleteReview);
 
 
 // Soal No 5

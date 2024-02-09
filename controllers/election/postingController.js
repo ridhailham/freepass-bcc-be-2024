@@ -78,7 +78,7 @@ exports.detailPosting = async (req, res) => {
             include: [
                 {
                     model: user,
-                    attributes: { exclude: ["createdAt", "updatedAt"] }
+                    attributes: { exclude: ["email","name","ktp" ,"password", "createdAt", "updatedAt", "roleId", "RoleId"] }
                 }
             ]
         });
@@ -93,7 +93,8 @@ exports.detailPosting = async (req, res) => {
         const commentData = await review.findAndCountAll({
             where: {
                 postingId: postingData.id
-            }
+            },
+            attributes: {exclude: ["createdAt", "updatedAt", "UserId", "PostingId"]}
         })
 
         
@@ -133,11 +134,11 @@ exports.updatePosting = async (req, res) => {
 
         // Update product data
         postingData.name = name || postingData.name;
-        postingData.description = description || postingData.description;z
+        postingData.description = description || postingData.description;
 
 
         if (req.file) {
-            productData.image = req.file.path;
+            postingData.image = req.file.path;
         }
 
 
@@ -165,16 +166,26 @@ exports.destroyPosting = async (req, res) => {
 
         const postingData = await posting.findByPk(postingId);
         
-
+        console.log(req.user.id);
+        console.log(postingData.userId);
         if (!postingData) {
             return res.status(404).json({
                 message: "Postingan tidak ditemukan"
             });
         }
 
+        if(postingData.userId !== req.user.id) {
+            return res.status(404).json({
+                message: "data postingan milik candidate lain"
+            })
+        }
+
+        
+
         await posting.destroy({
             where: {
-                id: postingId
+                id: postingId,
+
             }
         });
 

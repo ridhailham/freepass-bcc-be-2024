@@ -88,7 +88,7 @@ router.get('/:id', verifyToken, userOnly, detailPosting)
 
 
 
-// router.put('/:id', uploadProducts.single('image'), updateProduct);
+
 
 
 // Soal No 15

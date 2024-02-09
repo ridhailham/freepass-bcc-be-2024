@@ -25,14 +25,7 @@ const Voting = {
             key: 'id'
         }
     }
-    // userId: {
-    //     type: DataTypes.UUID,
-    //     allowNull: false,
-    //     reference: {
-    //         model: User,
-    //         key: 'id'
-    //     }
-    // }
+  
 }
 
 

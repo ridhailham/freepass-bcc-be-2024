@@ -7,17 +7,7 @@ const { user, time, role } = require('../../models');
 exports.getTimeByName = async (req, res) => {
     const { name_time } = req.body
 
-    // const isCandidateExist = await user.findOne({
-    //     where: {
-    //         candidate: nomor_candidate
-    //     }
-    // })
 
-    // if (!isCandidateExist) {
-    //     return res.status(400).json({
-    //         message: "candidate yang anda pilih tidak ada"
-    //     })
-    // }
 
     const count = await time.findOne({
         where: {
@@ -39,21 +29,7 @@ exports.updateOrCreateTime = async (req, res) => {
 
     const { start_time, end_time } = req.body
 
-    // const isCandidateExist = await time.findOne({
-    //     where: {
-    //         name_time: name_time,
-    //         start_time: start_time,
-    //         end_time: end_time,
-    //         role_id: req.user.role_id
-    //     }
-    // })
-
-    // if (!isCandidateExist) {
-    //     return res.status(400).json({
-    //         message: "candidate yang anda pilih tidak ada"
-    //     })
-    // }
-
+   
     const idUser = req.user.id;
 
 

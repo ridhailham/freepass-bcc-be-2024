@@ -112,3 +112,32 @@ exports.destroyUser = async (req, res) => {
         });
     }
 };
+
+
+
+// fungsi menampilkan data tabel user yang sudah login 
+exports.getMyUser = async (req, res) => {
+    const currentUser = await user.findOne({
+      where: {
+        id: req.user.id
+      },
+      include: [
+        {
+          model: profile,
+          attributes: { exclude: ["createdAt", "updatedAt", "userId"] }
+        }
+      ],
+      attributes: { exclude: ["createdAt", "updatedAt", "password"] }
+    });
+  
+    if (currentUser) {
+      return res.status(200).json({
+        data: currentUser
+      })
+  
+    }
+  
+    return res.status(404).json({
+      message: "User tidak ditemukan"
+    })
+  }

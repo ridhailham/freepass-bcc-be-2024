@@ -38,10 +38,6 @@ app.use(express.urlencoded({ extended: true }))
 
 
 app.use('/assets', express.static('assets'));
-// app.use('/assets/products', express.static('./assets/products'))
-
-
-
 
 
 app.use(express.json());
@@ -69,13 +65,6 @@ app.use('/api/v1/time', timeRoute);
 
 
 
-
-
-
-
-
-
-// store.sync();
 
 const APP_PORT = process.env.APP_PORT
 

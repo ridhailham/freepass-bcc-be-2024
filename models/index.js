@@ -12,11 +12,6 @@ const bcrypt = require('bcryptjs');
 
 
 
-// const category = db.define("Category", Category, {
-//     tableName: "categories",
-//     underscored: true,
-//   }
-// );
 
 
 const role = db.define("Role", Role, {
@@ -33,21 +28,13 @@ const user = db.define("User", User, {
 
 
 role.hasMany(user,  {
-  onDelete: 'CASCADE', // Ketika role dihapus, semua user yang terkait juga akan dihapus
-  // foreignKey: {
-  //   allowNull: false
-  // }
+  onDelete: 'CASCADE', 
+
 });
 user.belongsTo(role, { 
   foreignKey: 'roleId' 
 });
 
-
-// const product = db.define("Product", Product, {
-//     tableName: "products",
-//     underscored: true,
-//   }
-// );
 
 
 const posting = db.define("Posting", Posting, {
@@ -58,19 +45,13 @@ const posting = db.define("Posting", Posting, {
 
 
 user.hasMany(posting,  {
-  onDelete: 'CASCADE', // Ketika role dihapus, semua user yang terkait juga akan dihapus
-  // foreignKey: {
-  //   allowNull: false
-  // }
+  onDelete: 'CASCADE', 
+ 
 });
 posting.belongsTo(user, { 
   foreignKey: 'userId' 
 });
 
-
-// ONE TO MANY
-// category.hasMany(product);
-// product.belongsTo(category, {foreignKey: 'categoryId'});
 
 
 const profile = db.define("Profile", Profile, {
@@ -95,23 +76,12 @@ const review = db.define("Review", Review, {
 }
 );
 
-// MANY TO MANY
-// user.belongsToMany(product, { through: review });
-// product.belongsToMany(user, { through: review });
-
-// user.hasMany(product);
-// product.belongsTo(user, {foreignKey: 'userId'});
 
 
 // MANY TO MANY
 user.belongsToMany(posting, { through: review });
 posting.belongsToMany(user, { through: review });
 
-// user.hasMany(posting,  {
-//   onDelete: 'CASCADE', 
-
-// });
-// posting.belongsTo(user, { foreignKey: 'userId' });
 
 
 const voting = db.define("Voting", Voting, {
@@ -121,10 +91,8 @@ const voting = db.define("Voting", Voting, {
 );
 
 user.hasOne(voting,  {
-  onDelete: 'CASCADE', // Ketika role dihapus, semua user yang terkait juga akan dihapus
-  // foreignKey: {
-  //   allowNull: false
-  // }
+  onDelete: 'CASCADE', 
+
 });
 voting.belongsTo(user, {foreignKey: 'userId'});
 
@@ -137,10 +105,8 @@ const time = db.define("Time", Time, {
 );
 
 user.hasOne(time,  {
-  onDelete: 'CASCADE', // Ketika role dihapus, semua user yang terkait juga akan dihapus
-  // foreignKey: {
-  //   allowNull: false
-  // }
+  onDelete: 'CASCADE', 
+
 });
 time.belongsTo(user, { foreignKey: 'userId' });
 

@@ -27,13 +27,6 @@ const createSendToken = (user, statusCode, res) => {
 
   user.password = undefined;
 
-  // res.status(statusCode).json({
-  //   status: "Success",
-  //   message: "berhasil membuat user",
-  //   data: {
-  //     user: user
-  //   }
-  // })
 }
 
 
@@ -44,14 +37,14 @@ exports.registerUser = async (req, res) => {
 
   const { name, email, age, address, ktp } = req.body
   const image = req.file.path
-  
+
   if (name == null || email == null || req.body.password == null || req.body.passwordConfirm == null || age == null || address == null, ktp == null) {
     return res.status(400).json({
       message: "mohon diisi dengan lengkap",
     });
   }
 
-  if(!image) {
+  if (!image) {
     return res.status(400).json({
       message: image
     })
@@ -115,7 +108,7 @@ exports.registerUser = async (req, res) => {
 
 
 
-    
+
     return res.status(200).json({
       message: "Akun berhasil dibuat"
     })
@@ -145,7 +138,7 @@ exports.loginUser = async (req, res, next) => {
       }
     });
 
-    
+
 
     if (!isUserFound) {
       return res.status(403).json({
@@ -168,13 +161,13 @@ exports.loginUser = async (req, res, next) => {
     createSendToken(isUserFound, 200, res);
 
     res.status(200).json({
-        status: "Success",
-        // token: token,
-        message: "login berhasil"
-     });
+      status: "Success",
+      // token: token,
+      message: "login berhasil"
+    });
 
   } catch (err) {
-    
+
     return res.status(500).json({
       message: "Internal Server Error"
     });
@@ -195,49 +188,5 @@ exports.logoutUser = async (req, res) => {
   })
 }
 
-// exports.getMyUser = async (req, res) => {
-//   const currentUser = await user.findByPk(req.user.id);
-
-//   if(currentUser) {
-//     return res.status(200).json({
-//       id: currentUser.id,
-//       name: currentUser.name,
-//       email: currentUser.email,
-//       role_id: currentUser.role_id
-//     })
-
-//   }
-
-//   return res.status(404).json({
-//     message: "User tidak ditemukan"
-//   })
-// }
 
 
-
-// fungsi menampilkan data tabel user yang sudah login 
-exports.getMyUser = async (req, res) => {
-  const currentUser = await user.findOne({
-    where: {
-      id: req.user.id
-    },
-    include: [
-      {
-        model: profile,
-        attributes: { exclude: ["createdAt", "updatedAt", "userId"] }
-      }
-    ],
-    attributes: { exclude: ["createdAt", "updatedAt", "password"] }
-  });
-
-  if (currentUser) {
-    return res.status(200).json({
-      data: currentUser
-    })
-
-  }
-
-  return res.status(404).json({
-    message: "User tidak ditemukan"
-  })
-}

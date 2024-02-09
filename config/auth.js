@@ -1,3 +1,3 @@
 module.exports = {
-    secret: 'cnasdbcdasblasdaslcBVFCASDJKBCABADSVBNVCASCACSDB'
+    secret: process.env.SECRET_KEY
 }

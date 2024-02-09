@@ -39,7 +39,7 @@ role.hasMany(user,  {
   // }
 });
 user.belongsTo(role, { 
-  foreignKey: 'role_id' 
+  foreignKey: 'roleId' 
 });
 
 
@@ -56,6 +56,16 @@ const posting = db.define("Posting", Posting, {
 }
 );
 
+
+user.hasMany(posting,  {
+  onDelete: 'CASCADE', // Ketika role dihapus, semua user yang terkait juga akan dihapus
+  // foreignKey: {
+  //   allowNull: false
+  // }
+});
+posting.belongsTo(user, { 
+  foreignKey: 'userId' 
+});
 
 
 // ONE TO MANY
@@ -97,13 +107,11 @@ const review = db.define("Review", Review, {
 user.belongsToMany(posting, { through: review });
 posting.belongsToMany(user, { through: review });
 
-user.hasMany(posting,  {
-  onDelete: 'CASCADE', // Ketika role dihapus, semua user yang terkait juga akan dihapus
-  // foreignKey: {
-  //   allowNull: false
-  // }
-});
-posting.belongsTo(user, { foreignKey: 'userId' });
+// user.hasMany(posting,  {
+//   onDelete: 'CASCADE', 
+
+// });
+// posting.belongsTo(user, { foreignKey: 'userId' });
 
 
 const voting = db.define("Voting", Voting, {
@@ -154,6 +162,7 @@ async function initial() {
   await user.create({
     name: "admin",
     email: "admin@gmail.com",
+    ktp: "1234",
     password: bcrypt.hashSync('123456', 8),
     age: 21,
     address: "Solo",
@@ -166,6 +175,7 @@ async function initial() {
   const user1 = await user.create({
     name: "ridha ilham",
     email: "ridha@gmail.com",
+    ktp: "12345",
     password: bcrypt.hashSync('123456', 8),
     roleId: userRole2.id,
 
@@ -174,6 +184,7 @@ async function initial() {
   const user2 = await user.create({
     name: "adi setyawan",
     email: "adi@gmail.com",
+    ktp: "123456",
     password: bcrypt.hashSync('123456', 8),
     roleId: userRole2.id,
 

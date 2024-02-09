@@ -1,5 +1,5 @@
-const { user, profile, posting, review, voting, role } = require('../models');
-
+const { user, profile, posting, review, voting, role } = require('../../models');
+const fs = require('fs');
 
 // menampilkan semua data tabel user
 exports.getAllUser = async (req, res) => {
@@ -46,25 +46,25 @@ exports.destroyUser = async (req, res) => {
             });
         }
 
-        console.log(userData);
+        const Profile = await profile.findOne({
+            where: {
+                userId: userData.id
+            }
+        })
+
+        
         if (!userData) {
             return res.status(404).json({
                 message: "User tidak ditemukan"
             });
         }
         
-        const profileData = await profile.findOne({
-            where: {
-                userId: userData.id,
-                
-            }
-        });
-
-        if(!profileData) {
+        
+        if (!Profile) {
             return res.status(404).json({
-                message: "profile tidak ditemukan"
+                message: "data profile tidak ditemukan"
             })
-        }
+        } 
 
         
 
@@ -73,6 +73,8 @@ exports.destroyUser = async (req, res) => {
         //         userId: userData.id,
         //     }
         // });
+
+        
 
         await user.destroy({
             where: {
@@ -84,7 +86,10 @@ exports.destroyUser = async (req, res) => {
         });
 
         
-        
+        if (Profile.image) {
+            fs.unlinkSync(Profile.image);
+        }  
+              
         
         // await profile.destroy({
         //     where: {

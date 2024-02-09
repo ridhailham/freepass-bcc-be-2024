@@ -1,6 +1,6 @@
-const { user, profile } = require('../models');
+const { user, profile } = require('../../models');
 const bcrypt = require('bcryptjs');
-const { role } = require('../models');
+const { role } = require('../../models');
 const jwt = require('jsonwebtoken');
 const path = require('path')
 
@@ -42,10 +42,10 @@ const createSendToken = (user, statusCode, res) => {
 exports.registerUser = async (req, res) => {
 
 
-  const { name, email, password, passwordConfirm, age, address } = req.body
+  const { name, email, age, address, ktp } = req.body
   const image = req.file.path
-  console.log(image);
-  if (name == null || email == null || password == null || passwordConfirm == null || age == null || address == null) {
+  
+  if (name == null || email == null || req.body.password == null || req.body.passwordConfirm == null || age == null || address == null, ktp == null) {
     return res.status(400).json({
       message: "mohon diisi dengan lengkap",
     });
@@ -95,18 +95,18 @@ exports.registerUser = async (req, res) => {
   try {
 
     const newUser = await user.create({
-      name: req.body.name,
-      email: req.body.email,
+      name: name,
+      email: email,
       password: hashPassword,
+      ktp: ktp,
       roleId: userRole.id
     });
 
-    // const idUser = newUser.id;
-    // const image = req.file.path
+
 
     await profile.create({
-      age: req.body.age,
-      address: req.body.address,
+      age: age,
+      address: address,
       image: image,
       userId: newUser.id
     })
@@ -145,7 +145,7 @@ exports.loginUser = async (req, res, next) => {
       }
     });
 
-    console.log(isUserFound);
+    
 
     if (!isUserFound) {
       return res.status(403).json({
@@ -174,7 +174,7 @@ exports.loginUser = async (req, res, next) => {
      });
 
   } catch (err) {
-    console.error(err);
+    
     return res.status(500).json({
       message: "Internal Server Error"
     });

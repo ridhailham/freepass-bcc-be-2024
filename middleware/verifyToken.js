@@ -22,7 +22,7 @@ exports.verifyToken = async (req, res, next) => {
 
     const User = await user.findOne({ where: { id: decoded.id } });
 
-    console.log("HEHEHEHEHE"); // Fix the logging of user.id
+    
 
     if (!User) {
       return res.status(404).json({
@@ -30,7 +30,7 @@ exports.verifyToken = async (req, res, next) => {
       });
     }
     
-    console.log("INI USER ID "+User.role_id);
+    
     req.user = User;
     next();
   } catch (error) {

@@ -1,6 +1,6 @@
-const { user, profile } = require('../models');
+const { user, profile } = require('../../models');
 const bcrypt = require('bcryptjs');
-const { role } = require('../models');
+const { role } = require('../../models');
 
 
 
@@ -8,9 +8,9 @@ const { role } = require('../models');
 // admin mengubah status pengguna biasa menjadi status candidate
 exports.createCandidate = async (req, res) => {
 
-    const roleName = "candidate"
+    
 
-    const { name_paslon, email_paslon ,candidate } = req.body
+    const { name_paslon, email_paslon, candidate } = req.body
 
 
 
@@ -46,7 +46,7 @@ exports.createCandidate = async (req, res) => {
     try {
         await user.update({
 
-            role_id: userRole.id,
+            roleId: userRole.id,
             candidate: candidate,
             paslon: name_paslon
 

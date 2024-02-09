@@ -47,7 +47,7 @@ exports.adminOnly = async (req, res, next) => {
 
     try {
         // const decoded = jwt.verify(token, secret); // Replace with your actual secret key
-        const Role = await role.findByPk(req.user.role_id);
+        const Role = await role.findByPk(req.user.roleId);
 
         if (!Role) {
             return res.status(400).json({
@@ -81,7 +81,7 @@ exports.candidateOnly = async (req, res, next) => {
 
     try {
         // const decoded = jwt.verify(token, secret); // Replace with your actual secret key
-        const Role = await role.findByPk(req.user.role_id);
+        const Role = await role.findByPk(req.user.roleId);
 
         if (!Role) {
             return res.status(400).json({
@@ -116,7 +116,7 @@ exports.userOnly = async (req, res, next) => {
 
     try {
         // const decoded = jwt.verify(token, secret); // Replace with your actual secret key
-        const Role = await role.findByPk(req.user.role_id);
+        const Role = await role.findByPk(req.user.roleId);
 
         if (!Role) {
             return res.status(400).json({

@@ -1,4 +1,4 @@
-const { role } = require('../models');
+const { role } = require('../../models');
 
 
 // fungsi membuat role

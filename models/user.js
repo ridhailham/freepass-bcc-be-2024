@@ -9,13 +9,16 @@ const User = {
     id:{
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        
         primaryKey: true,
         
     },
     name:{
         type: DataTypes.STRING,
-        
+        allowNull: false
+    },
+    ktp:{
+        type: DataTypes.STRING, 
+        unique: true,
         allowNull: false
     },
     email:{

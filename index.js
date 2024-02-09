@@ -9,16 +9,16 @@ const bcrypt = require('bcryptjs')
 const morgan = require('morgan');
 
 
-const UserRoute = require('./routes/userRoute.js');
-const AuthRoute = require('./routes/AuthRoute.js');
+const UserRoute = require('./routes/user/userRoute.js');
+const AuthRoute = require('./routes/auth/AuthRoute.js');
 
-const RoleRoute = require('./routes/roleRoute.js');
-const PostingRoute = require('./routes/postingRoute.js');
-const ProfileRoute = require('./routes/profileRoute.js');
-const ReviewRoute = require('./routes/reviewRoute.js');
-const CandidateRoute = require('./routes/candidateRoute.js');
-const VotingRoute = require('./routes/votingRoute.js');
-const timeRoute = require('./routes/timeRoute.js');
+const RoleRoute = require('./routes/user/roleRoute.js');
+const PostingRoute = require('./routes/election/postingRoute.js');
+const ProfileRoute = require('./routes/user/profileRoute.js');
+const ReviewRoute = require('./routes/election/reviewRoute.js');
+const CandidateRoute = require('./routes/user/candidateRoute.js');
+const VotingRoute = require('./routes/election/votingRoute.js');
+const timeRoute = require('./routes/election/timeRoute.js');
 
 const { secret } = require('./config/auth.js')
 

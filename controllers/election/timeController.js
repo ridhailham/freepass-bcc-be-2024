@@ -1,6 +1,6 @@
 
 
-const { user, time, role } = require('../models');
+const { user, time, role } = require('../../models');
 
 
 // fungsi menghitung suara hasil voting

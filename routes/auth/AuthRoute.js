@@ -3,10 +3,10 @@ const router = express.Router();
 const multer = require('multer')
 const path = require('path')
 
-const { registerUser, loginUser, getMyUser } = require('../controllers/AuthController.js');
-const { logoutUser } = require('../controllers/AuthController.js');
-const { verifyToken } = require('../middleware/verifyToken.js');
-const { updateOrCreateProfile } = require('../controllers/profileController.js');
+const { registerUser, loginUser, getMyUser } = require('../../controllers/auth/AuthController.js');
+const { logoutUser } = require('../../controllers/auth/AuthController.js');
+const { verifyToken } = require('../../middleware/verifyToken.js');
+const { updateOrCreateProfile } = require('../../controllers/user/profileController.js');
 
 
 const storageProducts = multer.diskStorage({
@@ -38,9 +38,12 @@ const uploadFile = multer({
 });
 
 
+// Soal No 1
 // New user can register account to the system
 router.post('/register', uploadFile.single('image'), registerUser);
 
+
+// Soal No 2
 // User can login to the system
 router.post('/login', loginUser);
 

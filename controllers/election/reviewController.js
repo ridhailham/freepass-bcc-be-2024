@@ -1,11 +1,11 @@
-const { review, posting } = require('../models');
+const { review, posting } = require('../../models');
 
 
 
 // fungsi memberikan komentar atau edit komentar lama
 exports.createorUpdateReview = async (req, res) => {
     const idUser = req.user.id;
-    const idPosting = req.params.postingId;
+    const idPosting = req.params.id;
 
     const isPostingExist = await posting.findOne({
         where: {
@@ -13,7 +13,7 @@ exports.createorUpdateReview = async (req, res) => {
         }
     })
 
-    if(!isPostingExist) {
+    if (!isPostingExist) {
         return res.status(400).json({
             message: "postingan yang ingin anda komentari tidak ditemukan"
         })
@@ -21,13 +21,7 @@ exports.createorUpdateReview = async (req, res) => {
 
     const { comment } = req.body;
 
-    
 
-    // if (point > 10) {
-    //     return res.status(400).json({
-    //         message: "Point tidak boleh lebih dari 10"
-    //     });
-    // }
 
     try {
         const myReview = await review.findOne({
@@ -39,8 +33,8 @@ exports.createorUpdateReview = async (req, res) => {
 
         if (myReview) {
             await myReview.update({
-                
-                content: content || myReview.content
+
+                comment: comment || myReview.comment
             });
 
             return res.status(200).json({
@@ -50,7 +44,7 @@ exports.createorUpdateReview = async (req, res) => {
 
             if (comment === null) {
                 return res.status(400).json({
-                    message: "Content belum diisi dan anda juga belum melakukan review produk ini"
+                    message: "Comment belum diisi dan anda juga belum melakukan review produk ini"
                 });
             }
 
@@ -61,7 +55,7 @@ exports.createorUpdateReview = async (req, res) => {
             });
 
             return res.status(201).json({
-                message: "Review berhasil dibuat"
+                message: "Comment berhasil dibuat"
             });
         }
     } catch (error) {
@@ -71,3 +65,39 @@ exports.createorUpdateReview = async (req, res) => {
         });
     }
 };
+
+
+exports.deleteReview = async (req, res) => {
+
+    try {
+        const idComment = req.params.id;
+
+        const isPostingExist = await review.findOne({
+            where: {
+                id: idComment
+            }
+        })
+
+        if (!isPostingExist) {
+            return res.status(400).json({
+                message: "comment tidak ditemukan"
+            })
+        }
+
+        await review.destroy({
+            where: {
+                id: idComment
+            }
+        })
+
+        return res.status(200).json({
+            message: "Berhasil delete comment"
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: error.message
+        });
+    }
+}

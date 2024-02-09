@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { updateOrCreateProfile } = require('../controllers/profileController');
-const { verifyToken } = require('../middleware/verifyToken.js');
+const { addPosting, readPostings, detailPosting, updatePosting, destroyPosting } = require('../../controllers/election/postingController.js');
+
 const multer = require('multer');
+// const mulParse = multer();
+
 const path = require('path');
+const { verifyToken } = require('../../middleware/verifyToken.js');
+const { adminOnly, candidateOnly, userOnly } = require('../../middleware/AuthUser.js');
 
 
 
@@ -54,14 +58,50 @@ const imageFilter = function (req, file, cb) {
 // }, addProduct);
 
 
-const uploadProducts = multer({
+const uploadPostingan = multer({
     storage: storageProducts,
     fileFilter: imageFilter
 });
 
+// Soal No 14
+// Candidate can create a post
+router.post('/', verifyToken, candidateOnly, uploadPostingan.single('image'), addPosting);
 
 
-// User can edit their profile account
-router.post('/', verifyToken, uploadProducts.single('image'), updateOrCreateProfile);
+// Soal No 6
+// User can view the candidate's posts
+router.get('/', verifyToken, userOnly, readPostings);
+
+
+
+
+// Soal No 9
+// Admin can view the candidate’s posts  
+router.get('/admin/', verifyToken, adminOnly, readPostings);
+
+
+
+// Soal No 4
+// User
+// System will display the selected candidate's post along with its details
+router.get('/:id', verifyToken, userOnly, detailPosting)
+
+
+
+// router.put('/:id', uploadProducts.single('image'), updateProduct);
+
+
+// Soal No 15
+// Candidate can update a post
+router.put('/:id', verifyToken, candidateOnly, uploadPostingan.single('image'), updatePosting);
+
+
+// Soal No 16
+// Candidate can delete a post
+router.delete('/:id', verifyToken, candidateOnly, destroyPosting)
+
+// Soal No 12
+// Admin can delete the candidate's posts
+router.delete('/admin/:id', verifyToken, adminOnly, destroyPosting)
 
 module.exports = router;

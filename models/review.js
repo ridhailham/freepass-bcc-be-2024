@@ -30,31 +30,15 @@ const Review = {
             key: 'id'
         }
     },
-    userId: {
-        type: DataTypes.UUID,
-        allowNull: false,
-        reference: {
-            model: User,
-            key: 'id'
-        }
-    },
-    // productId:{
+    // userId: {
     //     type: DataTypes.UUID,
     //     allowNull: false,
-    //     references: {
-    //         model: Product,
+    //     reference: {
+    //         model: User,
     //         key: 'id'
     //     }
     // },
-    
-    // point: {
-    //     type: DataTypes.INTEGER,
-    //     allowNull: false,
-    //     validate: {
-    //         max: 10, 
-    //         min: 0,  
-    //     }
-    // },
+
     comment:{
         type: DataTypes.TEXT,
         allowNull: false

@@ -1,6 +1,6 @@
 
 
-const { user, voting, role } = require('../models');
+const { user, voting, role } = require('../../models');
 
 
 // fungsi menghitung suara hasil voting
@@ -36,7 +36,7 @@ exports.countVoting = async (req, res) => {
 // fungsi tambah voting atau update voting
 exports.updateOrCreateVoting = async (req, res) => {
     
-    const Role = await role.findByPk(req.user.role_id);
+    const Role = await role.findByPk(req.user.roleId);
 
     if (!Role) {
         return res.status(400).json({

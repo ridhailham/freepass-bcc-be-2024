@@ -1,9 +1,11 @@
 const { Op } = require('sequelize');
-const { posting, review, user } = require('../models');
+const { posting, review, user } = require('../../models');
 const fs = require('fs');
 const { profile } = require('console');
 const path = require('path')
-
+const Review = require('../../models/review.js')
+const User = require('../../models/user.js')
+const Profile = require('../../models/profile.js')
 
 
 
@@ -21,7 +23,7 @@ exports.addPosting= async (req, res) => {
             })
         }
 
-        console.log("   HALOO "+ idUser);
+        
 
 
 
@@ -65,101 +67,22 @@ exports.readPostings = async (req, res) => {
     }
   };
 
-// FILTER DATA TANPA PAGINATION
-
-// exports.readProducts = async (req, res) => {
-
-//     try {
-
-//         const { name } = req.query;
-//         console.log(name);
-
-//         let productData = ""
-//         if (name){
-//                 const products = await product.findAll({
-//                     where: {
-//                         name: {
-//                             [Op.like]: "%" + name + "%"
-//                         }
-//                     }
-//                 });
-
-
-//             productData = products
-
-
-//         } else {
-//             const products = await product.findAll();
-
-//             productData = products
-//         }
-
-//         if(productData == "") {
-//             return res.status(404).json({
-//                 message: "product filter tidak ditemukan"
-//             })
-//         }
-
-
-//         return res.status(200).json({
-//             data: productData
-//         })
-//     } catch (error) {
-//         return res.status(500).json({
-//             error: error
-//         })
-//     }
-
-// }
-
-
-
-// exports.detailProduct = async (req, res) => {
-//     const id = req.params.id;
-
-//     const productData = await product.findByPk(id);
-
-//     if(!productData) {
-//         res.status(404).json({
-//             message: "produk yang ada cari tidak ada"
-//     })
-
-//     console.log(productData);
-
-//     return res.status(200).json({
-//         data: productData
-//     })
-
-//     }
-// }
-
 
 exports.detailPosting = async (req, res) => {
 
-
+    
     try {
-        let id = req.params.id;
+        let idPosting = req.params.id;
 
-        const postingData = await posting.findByPk(id, {
+        const postingData = await posting.findByPk(idPosting, {
             include: [
                 {
-                    model: review,
-                    attributes: { exclude: ["user_id", "posting_id"] },
-                    include: [
-                        {
-                            model: user,
-                            attributes: ["name"],
-                            include: [
-                                {
-                                    model: profile,
-                                    attributes: ["age", "image"]
-                                }
-                            ]
-                        }
-                    ]
+                    model: user,
+                    attributes: { exclude: ["createdAt", "updatedAt"] }
                 }
             ]
         });
+        
         
         if (!postingData) {
             res.status(404).json({
@@ -167,37 +90,28 @@ exports.detailPosting = async (req, res) => {
             })
         }
 
+        const commentData = await review.findAndCountAll({
+            where: {
+                postingId: postingData.id
+            }
+        })
+
+        
+
         return res.status(200).json({
-            data: postingData,
+            post: postingData,
+            comment: commentData    
         })
 
     } catch (error) {
         res.status(500).json({
-            error: error
+            error: error.message
         })
     }
 
 }
 
 
-// exports.updateProduct = async(req, res) => {
-//     const idParams = req.params.id
-//     let {  } = req.body
-
-//     const productData = await product.findByPk(idParams);
-
-//     if(!productData) {
-//         res.status(404).json({
-//             message: "product id tidak ditemukan"
-//         })
-//     }
-
-//     const file = req.file
-
-//     if(file) {
-//         const namwImage = productData.image.replace
-//     }
-// }
 
 
 exports.updatePosting = async (req, res) => {
@@ -250,7 +164,7 @@ exports.destroyPosting = async (req, res) => {
         const postingId = req.params.id;
 
         const postingData = await posting.findByPk(postingId);
-
+        
 
         if (!postingData) {
             return res.status(404).json({
@@ -263,6 +177,11 @@ exports.destroyPosting = async (req, res) => {
                 id: postingId
             }
         });
+
+        
+        if (postingData.image) {
+            fs.unlinkSync(postingData.image);
+        }  
 
         return res.status(200).json({
             message: "Postingan berhasil dihapus"
@@ -280,32 +199,3 @@ exports.destroyPosting = async (req, res) => {
 
 
 
-
-// exports.destroyProduct = async (req, res) => {
-//     try {
-//         const productData = await product.findOne({
-//             where: {
-//                 id: req.params.id
-//             }
-//         })
-
-//         if (!productData) {
-//             return res.status(404).json({
-//                 message: "Product tidak ditemukan"
-//             });
-//         }
-
-//         await product.destroy({
-//             where: {
-//                 id: productData.id
-//             }
-//         });
-
-//         res.status(204).json({
-//             message: "product berhasil delete"
-//         });
-//     } catch (error) {
-//         console.error(error); // Log kesalahan
-//         res.status(500).json({ message: "Terjadi kesalahan saat menghapus berita" });
-//     }
-// }

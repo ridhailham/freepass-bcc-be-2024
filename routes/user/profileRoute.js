@@ -1,13 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { addPosting, readPostings, detailPosting, updatePosting, destroyPosting } = require('../controllers/postingController.js');
-
+const { updateOrCreateProfile } = require('../../controllers/user/profileController.js');
+const { verifyToken } = require('../../middleware/verifyToken.js');
 const multer = require('multer');
-// const mulParse = multer();
-
 const path = require('path');
-const { verifyToken } = require('../middleware/verifyToken.js');
-const { adminOnly, candidateOnly, userOnly } = require('../middleware/AuthUser.js');
 
 
 
@@ -63,27 +59,9 @@ const uploadProducts = multer({
     fileFilter: imageFilter
 });
 
-// Candidate can create a post
-router.post('/', verifyToken, candidateOnly, uploadProducts.single('image'), addPosting);
-
-// User can view the candidate's posts
-router.get('/', verifyToken, readPostings);
-
-// Admin can view the candidate’s posts  
-router.get('/admin/', verifyToken, adminOnly, readPostings);
-
-router.get('/:id', detailPosting)
-
-// router.put('/:id', uploadProducts.single('image'), updateProduct);
-
-// Candidate can update a post
-router.put('/:id', verifyToken, candidateOnly, uploadProducts.single('image'), updatePosting);
 
 
-// Candidate can delete a post
-router.delete('/:id', verifyToken, candidateOnly, destroyPosting)
+// User can edit their profile account
+router.post('/', verifyToken, uploadProducts.single('image'), updateOrCreateProfile);
 
-// Admin can delete the candidate's posts
-router.delete('/admin/:id', verifyToken, adminOnly, destroyPosting)
-
-module.exports = router;    
+module.exports = router;

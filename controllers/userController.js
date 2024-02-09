@@ -26,7 +26,13 @@ exports.destroyUser = async (req, res) => {
 
         const userData = await user.findByPk(userId);
 
-        const Role = await role.findByPk(userData.role_id);
+        if(!userData) {
+            return res.status(404).json({
+                message: "user data tidak ditemukan"
+            })
+        }
+
+        const Role = await role.findByPk(userData.roleId);
 
         if (!Role) {
             return res.status(400).json({

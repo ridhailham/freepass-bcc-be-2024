@@ -132,7 +132,6 @@ async function initial() {
     password: bcrypt.hashSync('123456', 8),
     age: 21,
     address: "Solo",
-    
     roleId: userRole1.id,
 
   })

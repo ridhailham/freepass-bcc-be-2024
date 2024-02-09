@@ -2,6 +2,7 @@ const { user, profile } = require('../models');
 const bcrypt = require('bcryptjs');
 const { role } = require('../models');
 const jwt = require('jsonwebtoken');
+const path = require('path')
 
 
 // fungsi proses token jwt
@@ -38,21 +39,29 @@ const createSendToken = (user, statusCode, res) => {
 
 
 // fungsi registrasi pengguna
-exports.registerUser = async (req, res, next) => {
+exports.registerUser = async (req, res) => {
 
 
-
-  if (req.body.name == null || req.body.email == null || req.body.password == null || req.body.passwordConfirm == null || req.body.age == null || req.body.address == null) {
+  const { name, email, password, passwordConfirm, age, address } = req.body
+  const image = req.file.path
+  console.log(image);
+  if (name == null || email == null || password == null || passwordConfirm == null || age == null || address == null) {
     return res.status(400).json({
       message: "mohon diisi dengan lengkap",
     });
+  }
+
+  if(!image) {
+    return res.status(400).json({
+      message: image
+    })
   }
 
   if (req.body.password !== req.body.passwordConfirm) {
     return res.status(400).json({ message: "Password dan Confirm Password tidak cocok" });
   }
 
-  // Email validation using regular expression for Gmail addresses
+
   const isGmail = /@gmail\.com$/.test(req.body.email);
   if (!isGmail) {
     return res.status(400).json({ message: "Email harus menggunakan Gmail" });
@@ -82,30 +91,40 @@ exports.registerUser = async (req, res, next) => {
   });
 
 
-  
+
   try {
-    
+
     const newUser = await user.create({
       name: req.body.name,
       email: req.body.email,
       password: hashPassword,
-      role_id: userRole.id
+      roleId: userRole.id
     });
+
+    // const idUser = newUser.id;
+    // const image = req.file.path
+
+    await profile.create({
+      age: req.body.age,
+      address: req.body.address,
+      image: image,
+      userId: newUser.id
+    })
 
     createSendToken(newUser, 201, res);
 
-    // const token = jwt.sign(newUser.id,
-    //   process.env.SECRET_KEY, 
-    //   {
-    //       expiresIn: '1h',
-    //   }
-    // );
-    next()
+
+
     
+    return res.status(200).json({
+      message: "Akun berhasil dibuat"
+    })
+
+
   } catch (error) {
     return res.status(400).json({
       message: error.message,
-      errors: error.errors 
+      errors: error.errors
 
     });
   }
@@ -134,11 +153,7 @@ exports.loginUser = async (req, res, next) => {
       });
     }
 
-    // if(isUserFound.role != "user") {
-    //   return res.status(400).json({
-    //     message: "bukan user"
-    //   })
-    // }
+
 
     const passwordIsValid = bcrypt.compareSync(req.body.password, isUserFound.password);
 
@@ -150,41 +165,13 @@ exports.loginUser = async (req, res, next) => {
     }
 
 
-
-    // const data = {
-    //     id: isUserFound.id,
-    //     name: isUserFound.name,
-    //     email: isUserFound.email,
-
-    //     role: user.role
-    //   };
-
-    // res.cookie("token", token, {
-    //   httpOnly: true
-    // });
-
-    // const refreshToken = jwt.sign({ userId }, config.secret, {
-    //     expiresIn: '86400'
-    // });
-
-    // await User.update({ refresh_token: refreshToken }, {
-    //     where: {
-    //         uuid: userId
-    //     }
-    // });
-
-    // res.cookie("refreshToken", refreshToken, {
-    //     httpOnly: true,
-    //     maxAge: 12,
-    // });
-
     createSendToken(isUserFound, 200, res);
 
-    // res.status(200).json({
-    //     status: "Success",
-    //     token: token,
-    //     message: "login berhasil"
-    //  });
+    res.status(200).json({
+        status: "Success",
+        // token: token,
+        message: "login berhasil"
+     });
 
   } catch (err) {
     console.error(err);
@@ -199,12 +186,12 @@ exports.loginUser = async (req, res, next) => {
 // fungsi logout pengguna
 exports.logoutUser = async (req, res) => {
   res.cookie('jwt', '', {
-      httpOnly: true,
-      expires: new Date(0)
+    httpOnly: true,
+    expires: new Date(0)
   })
 
   res.status(200).json({
-      message: "Logout Berhasil"
+    message: "Logout Berhasil"
   })
 }
 
@@ -220,7 +207,7 @@ exports.logoutUser = async (req, res) => {
 //     })
 
 //   }
-  
+
 //   return res.status(404).json({
 //     message: "User tidak ditemukan"
 //   })
@@ -243,13 +230,13 @@ exports.getMyUser = async (req, res) => {
     attributes: { exclude: ["createdAt", "updatedAt", "password"] }
   });
 
-  if(currentUser) {
+  if (currentUser) {
     return res.status(200).json({
       data: currentUser
     })
 
   }
-  
+
   return res.status(404).json({
     message: "User tidak ditemukan"
   })

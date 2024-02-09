@@ -2,7 +2,7 @@ const { Op } = require('sequelize');
 const { posting, review, user } = require('../models');
 const fs = require('fs');
 const { profile } = require('console');
-
+const path = require('path')
 
 
 
@@ -11,7 +11,8 @@ exports.addPosting= async (req, res) => {
 
     try {
         
-        let image = req.file.path
+        let image = req.file
+        let idUser = req.user.id
         let { name, description } = req.body
 
         if (name == null || description == null || image == null) {
@@ -20,10 +21,15 @@ exports.addPosting= async (req, res) => {
             })
         }
 
+        console.log("   HALOO "+ idUser);
+
+
+
         const newPosting = await posting.create({
             name: name,
             description: description,
-            image: image
+            image: req.file.path,
+            userId: idUser
         });
 
 
@@ -258,7 +264,7 @@ exports.destroyPosting = async (req, res) => {
             }
         });
 
-        return res.status(204).json({
+        return res.status(200).json({
             message: "Postingan berhasil dihapus"
         });
 

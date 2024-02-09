@@ -19,7 +19,7 @@ exports.createorUpdateReview = async (req, res) => {
         })
     }
 
-    const { content } = req.body;
+    const { comment } = req.body;
 
     
 
@@ -32,8 +32,8 @@ exports.createorUpdateReview = async (req, res) => {
     try {
         const myReview = await review.findOne({
             where: {
-                posting_id: idPosting,
-                user_id: idUser
+                postingId: idPosting,
+                userId: idUser
             }
         });
 
@@ -48,7 +48,7 @@ exports.createorUpdateReview = async (req, res) => {
             });
         } else {
 
-            if (content === null) {
+            if (comment === null) {
                 return res.status(400).json({
                     message: "Content belum diisi dan anda juga belum melakukan review produk ini"
                 });
@@ -57,8 +57,7 @@ exports.createorUpdateReview = async (req, res) => {
             await review.create({
                 postingId: idPosting,
                 userId: idUser,
-                
-                content: content
+                comment: comment
             });
 
             return res.status(201).json({
@@ -68,7 +67,7 @@ exports.createorUpdateReview = async (req, res) => {
     } catch (error) {
         console.error(error);
         return res.status(500).json({
-            message: "Terjadi kesalahan server"
+            message: error.message
         });
     }
 };

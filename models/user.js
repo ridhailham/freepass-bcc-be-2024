@@ -44,7 +44,7 @@ const User = {
         unique: true,
         allowNull: true
     },
-    role_id: {
+    roleId: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {

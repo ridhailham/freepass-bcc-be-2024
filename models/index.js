@@ -32,8 +32,15 @@ const user = db.define("User", User, {
 );
 
 
-role.hasMany(user);
-user.belongsTo(role, { foreignKey: 'role_id' });
+role.hasMany(user,  {
+  onDelete: 'CASCADE', // Ketika role dihapus, semua user yang terkait juga akan dihapus
+  // foreignKey: {
+  //   allowNull: false
+  // }
+});
+user.belongsTo(role, { 
+  foreignKey: 'role_id' 
+});
 
 
 // const product = db.define("Product", Product, {
@@ -63,7 +70,12 @@ const profile = db.define("Profile", Profile, {
 );
 
 
-user.hasOne(profile);
+user.hasOne(profile,  {
+  onDelete: 'CASCADE', // Ketika role dihapus, semua user yang terkait juga akan dihapus
+  // foreignKey: {
+  //   allowNull: false
+  // }
+});
 profile.belongsTo(user, { foreignKey: 'userId' });
 
 
@@ -85,7 +97,12 @@ const review = db.define("Review", Review, {
 user.belongsToMany(posting, { through: review });
 posting.belongsToMany(user, { through: review });
 
-user.hasMany(posting);
+user.hasMany(posting,  {
+  onDelete: 'CASCADE', // Ketika role dihapus, semua user yang terkait juga akan dihapus
+  // foreignKey: {
+  //   allowNull: false
+  // }
+});
 posting.belongsTo(user, { foreignKey: 'userId' });
 
 
@@ -95,7 +112,12 @@ const voting = db.define("Voting", Voting, {
 }
 );
 
-user.hasOne(voting);
+user.hasOne(voting,  {
+  onDelete: 'CASCADE', // Ketika role dihapus, semua user yang terkait juga akan dihapus
+  // foreignKey: {
+  //   allowNull: false
+  // }
+});
 voting.belongsTo(user, {foreignKey: 'userId'});
 
 
@@ -106,7 +128,12 @@ const time = db.define("Time", Time, {
 }
 );
 
-user.hasOne(time);
+user.hasOne(time,  {
+  onDelete: 'CASCADE', // Ketika role dihapus, semua user yang terkait juga akan dihapus
+  // foreignKey: {
+  //   allowNull: false
+  // }
+});
 time.belongsTo(user, { foreignKey: 'userId' });
 
 
@@ -131,7 +158,7 @@ async function initial() {
     age: 21,
     address: "Solo",
     
-    role_id: userRole1.id,
+    roleId: userRole1.id,
 
   })
 
@@ -140,9 +167,19 @@ async function initial() {
     name: "ridha ilham",
     email: "ridha@gmail.com",
     password: bcrypt.hashSync('123456', 8),
-    role_id: userRole2.id,
+    roleId: userRole2.id,
 
   })
+
+  const user2 = await user.create({
+    name: "adi setyawan",
+    email: "adi@gmail.com",
+    password: bcrypt.hashSync('123456', 8),
+    roleId: userRole2.id,
+
+  })
+
+  console.log(user1.id);
 
   await profile.create({
     age: 21,
@@ -152,13 +189,7 @@ async function initial() {
   })
 
   
-  const user2 = await user.create({
-    name: "adi setyawan",
-    email: "adi@gmail.com",
-    password: bcrypt.hashSync('123456', 8),
-    role_id: userRole2.id,
-
-  })
+  
 
   await profile.create({
     age: 21,

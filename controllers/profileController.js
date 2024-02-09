@@ -1,10 +1,14 @@
 const { profile } = require('../models');
+const path = require('path')
 
 
 
 // membuat dan edit tabel profile
 exports.updateOrCreateProfile = async (req, res) => {
     const { age, address } = req.body
+
+    console.log(req.body.age);
+    console.log(req.body.address);
 
     const idUser = req.user.id;
     const image = req.file.path

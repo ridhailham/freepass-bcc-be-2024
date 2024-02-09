@@ -81,7 +81,7 @@ router.put('/:id', verifyToken, candidateOnly, uploadProducts.single('image'), u
 
 
 // Candidate can delete a post
-router.delete('/:id', verifyToken, candidateOnly, verifyToken, destroyPosting)
+router.delete('/:id', verifyToken, candidateOnly, destroyPosting)
 
 // Admin can delete the candidate's posts
 router.delete('/admin/:id', verifyToken, adminOnly, destroyPosting)

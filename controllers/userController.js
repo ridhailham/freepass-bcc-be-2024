@@ -1,4 +1,4 @@
-const { user } = require('../models');
+const { user, profile, posting, review, voting, role } = require('../models');
 
 
 // menampilkan semua data tabel user
@@ -26,21 +26,69 @@ exports.destroyUser = async (req, res) => {
 
         const userData = await user.findByPk(userId);
 
+        const Role = await role.findByPk(userData.role_id);
 
-        if (!userData) {
-            return res.status(404).json({
-                message: "Postingan tidak ditemukan"
+        if (!Role) {
+            return res.status(400).json({
+                message: 'Role tidak ada yang cocok',
             });
         }
 
-        await user.destroy({
+        if (Role.name == "admin") {
+            return res.status(403).json({
+                message: 'Admin jangan dihapus, nanti sistem rusak',
+            });
+        }
+
+        console.log(userData);
+        if (!userData) {
+            return res.status(404).json({
+                message: "User tidak ditemukan"
+            });
+        }
+        
+        const profileData = await profile.findOne({
             where: {
-                id: postingId,
-                role: "user" || "candidate"
+                userId: userData.id,
+                
             }
         });
 
-        return res.status(204).json({
+        if(!profileData) {
+            return res.status(404).json({
+                message: "profile tidak ditemukan"
+            })
+        }
+
+        
+
+        // await profile.destroy({
+        //     where: {
+        //         userId: userData.id,
+        //     }
+        // });
+
+        await user.destroy({
+            where: {
+                id: userData.id,
+                
+            },
+            cascade: true,
+            include: [posting, profile, review, voting]
+        });
+
+        
+        
+        
+        // await profile.destroy({
+        //     where: {
+        //         userId: profileData.id,
+                
+        //     }
+        // });
+
+        return res.status(200).json({
+            status: "success",
             message: "Candidate atau User berhasil dihapus"
         });
 
